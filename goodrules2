@@ -1,0 +1,2 @@
+add 65123 deny log ip from any to any via PREPROCESS_ME_USING_m4
+add 65321 deny log ip from any to any via PREPROCESS_ME_USING_m4

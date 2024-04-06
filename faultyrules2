@@ -1,0 +1,7 @@
+add 65444 deny log asdfip from any to any via ERR
+{fwcmd} deny log ip from any to any via SHELL_SYNTAX
+add 65535 deny log ip from any to any 65535 via DEFAULT_RULE
+add 65535 deny log ip from any to any 65535 via SECOND_DEFAULT
+add 65555 deny log ip from any to any via GREATER_THAN
+add 88888 deny log ip from any to any via also_GREATER
+add deny log ip from any to any via FORGOT_NUMBER_NOERR
