@@ -81,7 +81,8 @@ check_rules_line_by_line() {
         grep -E --color "^[0]{5,5}" $tmpfile2
         printf "\n"
 
-        echo "These rules would mess with ipfw's default rule (numbered 65535):"
+        echo "Touching the default rule (65535) only works with ipfw -n!"
+        echo "You'll get 'ipfw: getsockopt(IP_FW_XADD): Invalid argument'!"
         grep -E --color '^(65535)' $tmpfile2
         printf "\n"
 
