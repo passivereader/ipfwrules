@@ -70,7 +70,14 @@ check_rules_line_by_line() {
         ##### END OF IFS-HATES-ME-PART #####
         printf "\n"
 
-        echo "Forgot rule number? Automatic number assignment is 00000:"
+        echo "Forgot rule number?"
+        echo "ipfw -n (dry run) misleadingly assigns 00000 in this case."
+        echo "00000 will be converted to the penultimate rule number."
+        # actually adding a rule without rule number converts -n's 00000 to:
+        # current penultimate rule number plus value of sysctl
+        # net.inet.ip.fw.autoinc_step while making sure that the default
+        # rule is not overridden. Max auto rule number is 65535 less the 
+        # value of net.inet.ip.fw.autoinc_step.
         grep -E --color "^[0]{5,5}" $tmpfile2
         printf "\n"
 
