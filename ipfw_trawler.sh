@@ -11,7 +11,7 @@
 base_cmd="ipfw -q" # consider replacing -q with -n for a dry-run
 
 # IPv4, IPv6, MAC, etc. require something more sophisticated
-for number in $(seq 63335)
+for number in $(seq 65335)
 do
     # NOTE: there are other protocols than UDP and TCP --> /etc/protocols
     eval "$base_cmd add $number set 27 count src-port $number proto udp"
