@@ -1,0 +1,36 @@
+add 00001 set 0 allow ip from any to any via lo0 // LOOPBACK
+add 00001 set 0 deny ip from any to 127.0.0.0/8 // LOOPBACK
+add 00001 set 0 deny ip from 127.0.0.0/8 to any // LOOPBACK
+add 00001 set 0 deny ip from any to ::1 // LOOPBACK
+add 00001 set 0 deny ip from ::1 to any // LOOPBACK
+add 00002 set 0 deny ip from 192.168.0.0/16 to any in via vtnet0 // RFC1918
+add 00002 set 0 deny ip from 172.16.0.0/12 to any in via vtnet0 // RFC1918
+add 00002 set 0 deny ip from 10.0.0.0/8 to any in via vtnet0 // RFC1918
+add 00002 set 0 deny ip from 0.0.0.0/8 to any in via vtnet0 // NON-ROUTABLE
+add 00002 set 0 deny ip from 169.254.0.0/16 to any in via vtnet0 // NON-ROUTABLE
+add 00002 set 0 deny ip from 224.0.0.0/4 to any in via vtnet0 // NON-ROUTABLE
+add 00002 set 0 deny ip from 192.0.2.0/24 to any in via vtnet0 // NON-ROUTABLE
+add 00002 set 0 deny ip from 240.0.0.0/4 to any in via vtnet0 // NON-ROUTABLE
+# https://www.cisco.com/c/en/us/support/docs/ip/ip-version-6-ipv6/113328-ipv6-lla.html
+add 00003 set 0 allow ipv6-icmp from fe80::/10 to fe80::/10 // IPv6 
+add 00003 set 0 allow ipv6-icmp from fe80::/10 to fe80::/10 // IPv6
+add 00004 set 0 allow icmp from any to any icmptypes 0,3,8,11 // ICMP
+add 00004 set 0 deny icmp from any to any // ICMP
+add 00004 set 0 allow ipv6-icmp from any to any icmp6types 1,2,3,4,128,129,133,134,135,136,137 // ICMPv6
+add 00004 set 0 deny ipv6-icmp from any to any // ICMPv6
+add 00005 set 0 check-state // DYNAMIC
+# 1.1.1.1 and 8.8.4.4 chosen during FreeBSD installation
+# see /var/unbound/forward.conf and local-unbound(8)
+# unbound root hints: local-unbound-control list_stubs
+add 00006 set 0 allow tcp from any to 1.1.1.1,8.8.4.4 53 out setup keep-state // DNS
+add 00006 set 0 allow udp from any to 1.1.1.1,8.8.4.4 53 out keep-state // DNS
+add 00006 set 0 allow tcp from any to table(DNSROOTHINTS) 53 out setup keep-state // DNS
+add 00006 set 0 allow udp from any to table(DNSROOTHINTS) 53 out keep-state // DNS
+add 00007 set 0 allow udp from me to any 123 out uid root keep-state // NTP
+add 00022 set 0 allow tcp from any to me 22 in setup limit src-addr 5 // SSH
+add 00022 set 0 allow tcp from any to me6 22 in setup limit src-addr 5 // SSH
+add 00023 set 0 deny tcp from any to any established in via vtnet0 // DYNAMIC
+add 00050 set 30 allow tcp from me to any setup keep-state uid root // pkg & freebsd-update
+add 00050 set 30 count ip from any to any // ipfw set enable 30 (before freebsd-update or pkg then disable again)
+# ipfw set enable 30 before freebsd-update and pkg
+set disable 30
