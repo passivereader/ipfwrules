@@ -3,6 +3,9 @@ add 00001 set 0 deny ip from any to 127.0.0.0/8 // LOOPBACK
 add 00001 set 0 deny ip from 127.0.0.0/8 to any // LOOPBACK
 add 00001 set 0 deny ip from any to ::1 // LOOPBACK
 add 00001 set 0 deny ip from ::1 to any // LOOPBACK
+# you probably don't want to block RFC1918 addresses at home
+# comment the following three rules out if you are at home
+# in fact all 00002 rules may cause trouble at home
 add 00002 set 0 deny ip from 192.168.0.0/16 to any in via vtnet0 // RFC1918
 add 00002 set 0 deny ip from 172.16.0.0/12 to any in via vtnet0 // RFC1918
 add 00002 set 0 deny ip from 10.0.0.0/8 to any in via vtnet0 // RFC1918
