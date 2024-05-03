@@ -1,1 +1,14 @@
-add 00100 set 1 deny ip from any to any // MOVEME
+add 65500 set 1 count tcp from me to any setup // ZERO ME
+add 65501 set 1 deny log tcp from me to any setup
+add 65502 set 1 count tcp from any to me setup // ZERO ME
+add 65503 set 1 deny log tcp from any to me setup
+add 65504 set 1 count udp from me to any // ZERO ME
+add 65505 set 1 deny log udp from me to any
+add 65506 set 1 count udp from any to me // ZERO ME
+add 65507 set 1 deny log udp from any to me
+add 65508 set 1 count ip from me to any // ZERO ME
+add 65509 set 1 deny log ip from me to any
+add 65510 set 1 count ip from any to me // ZERO ME
+add 65511 set 1 deny log ip from any to me
+add 65512 set 1 count ip from any to any // ZERO ME
+add 65513 set 1 deny log ip from any to any // MOVEME
